@@ -180,7 +180,7 @@ func TestEncryptionService_UseCurrentProvider(t *testing.T) {
 			Raw: raw,
 			SecretsManagement: setting.SecretsManagerSettings{
 				CurrentEncryptionProvider: "secret_key.v1",
-				ConfiguredKMSProviders:    map[string]map[string]string{"secret_key.v1": {"secret_key": "SW2YcwTIb9zpOOhoPsMm"}},
+				ConfiguredKMSProviders:    map[string]map[string]string{"secret_key.v1": {"secret_key": "test-secret-key-not-real"}},
 			},
 		}
 
@@ -566,7 +566,7 @@ func TestIntegration_SecretsService(t *testing.T) {
 			cfg := &setting.Cfg{
 				SecretsManagement: setting.SecretsManagerSettings{
 					CurrentEncryptionProvider: "secret_key.v1",
-					ConfiguredKMSProviders:    map[string]map[string]string{"secret_key.v1": {"secret_key": "SW2YcwTIb9zpOOhoPsMm"}},
+					ConfiguredKMSProviders:    map[string]map[string]string{"secret_key.v1": {"secret_key": "test-secret-key-not-real"}},
 					DataKeysCacheTTL:          15 * time.Minute,
 				},
 			}
@@ -713,7 +713,7 @@ func TestConsolidateNamespace_FatalWhenCacheGetByIdReportsUnexpectedNamespace(t 
 	cfg := &setting.Cfg{
 		SecretsManagement: setting.SecretsManagerSettings{
 			CurrentEncryptionProvider: "secret_key.v1",
-			ConfiguredKMSProviders:    map[string]map[string]string{"secret_key.v1": {"secret_key": "SW2YcwTIb9zpOOhoPsMm"}},
+			ConfiguredKMSProviders:    map[string]map[string]string{"secret_key.v1": {"secret_key": "test-secret-key-not-real"}},
 			DataKeysCacheTTL:          time.Hour,
 		},
 	}
@@ -766,7 +766,7 @@ func TestEncryptionService_WithSkipCache(t *testing.T) {
 		cfg := &setting.Cfg{
 			SecretsManagement: setting.SecretsManagerSettings{
 				CurrentEncryptionProvider: "secret_key.v1",
-				ConfiguredKMSProviders:    map[string]map[string]string{"secret_key.v1": {"secret_key": "SW2YcwTIb9zpOOhoPsMm"}},
+				ConfiguredKMSProviders:    map[string]map[string]string{"secret_key.v1": {"secret_key": "test-secret-key-not-real"}},
 			},
 		}
 
@@ -848,7 +848,7 @@ func TestEncryptionService_FlushCache(t *testing.T) {
 	cfg := &setting.Cfg{
 		SecretsManagement: setting.SecretsManagerSettings{
 			CurrentEncryptionProvider: "secret_key.v1",
-			ConfiguredKMSProviders:    map[string]map[string]string{"secret_key.v1": {"secret_key": "SW2YcwTIb9zpOOhoPsMm"}},
+			ConfiguredKMSProviders:    map[string]map[string]string{"secret_key.v1": {"secret_key": "test-secret-key-not-real"}},
 			// TODO: If this is flaky, consider having IsExpired() take a time.Time that we can override for testing
 			DataKeysCacheTTL: time.Hour, // Long TTL to ensure keys don't expire during test.
 		},

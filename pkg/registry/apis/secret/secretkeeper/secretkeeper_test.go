@@ -29,7 +29,7 @@ func Test_OSSKeeperService(t *testing.T) {
 	cfg := &setting.Cfg{
 		SecretsManagement: setting.SecretsManagerSettings{
 			CurrentEncryptionProvider: "secret_key.v1",
-			ConfiguredKMSProviders:    map[string]map[string]string{"secret_key.v1": {"secret_key": "SW2YcwTIb9zpOOhoPsMm"}},
+			ConfiguredKMSProviders:    map[string]map[string]string{"secret_key.v1": {"secret_key": "test-secret-key-not-real"}},
 		},
 	}
 	keeperService, err := setupTestService(t, cfg)

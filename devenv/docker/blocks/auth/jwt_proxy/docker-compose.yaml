@@ -31,11 +31,11 @@
     image: docker.io/bitnami/oauth2-proxy:7.4.0
     container_name: oauthproxy
     command: [
-      "--cookie-secret=yI-CWT5s4sBR2Zd0DDJJlTYc0aQ3jwGH15jYA18ZAQA=",
+      "--cookie-secret=ZGV2LW9ubHktY29va2llLXNlY3JldC0zMi1ieXRlcyE=",
       "--upstream=http://env.grafana.local:3000",
       "--provider=keycloak",
       "--client-id=grafana-oauth",
-      "--client-secret=d17b9ea9-bcb1-43d2-b132-d339e55872a8",
+      "--client-secret=deadbeef-dead-beef-dead-beefdeadbeef",
       "--login-url=http://env.grafana.local:8087/realms/grafana/protocol/openid-connect/auth",
       "--redeem-url=http://env.grafana.local:8087/realms/grafana/protocol/openid-connect/token",
       "--profile-url=http://env.grafana.local:8087/realms/grafana/protocol/openid-connect/userinfo",

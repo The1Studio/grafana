@@ -16,7 +16,7 @@ enabled = true
 name = Keycloak-OAuth
 allow_sign_up = true
 client_id = grafana-oauth
-client_secret = d17b9ea9-bcb1-43d2-b132-d339e55872a8
+client_secret = deadbeef-dead-beef-dead-beefdeadbeef
 scopes = openid email profile offline_access roles
 email_attribute_path = email
 login_attribute_path = username
@@ -62,7 +62,7 @@ curl --request POST \
   --header 'Content-Type: application/x-www-form-urlencoded' \
   --data client_id=grafana-oauth \
   --data grant_type=password \
-  --data client_secret=d17b9ea9-bcb1-43d2-b132-d339e55872a8 \
+  --data client_secret=deadbeef-dead-beef-dead-beefdeadbeef \
   --data scope=openid \
   --data username=oauth-admin \
   --data password=grafana

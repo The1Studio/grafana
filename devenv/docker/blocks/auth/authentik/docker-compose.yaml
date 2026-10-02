@@ -34,7 +34,7 @@
     environment:
       AUTHENTIK_HOST: http://authentik:9000
       AUTHENTIK_INSECURE: "true"
-      AUTHENTIK_TOKEN: 77vDKwFWqCAsD9ykbH6vsGuMHtloM6urfeglrR9KRhWFcABtwmGGiQWHQStw
+      AUTHENTIK_TOKEN: dev-only-authentik-token
     depends_on:
       - "authentik"
 
@@ -44,7 +44,7 @@
     container_name: authentik
     command: server
     environment:
-      AUTHENTIK_SECRET_KEY: FA8GANUqMJwFg0drDlurF+ZQK2A6ohSjc4MGksUqN+A36yIA
+      AUTHENTIK_SECRET_KEY: dev-only-authentik-secret-key
       AUTHENTIK_REDIS__HOST: authentikredis
       AUTHENTIK_POSTGRESQL__HOST: authentikdb
       AUTHENTIK_POSTGRESQL__USER: authentik
@@ -68,7 +68,7 @@
     container_name: authentik-worker
     command: worker
     environment:
-      AUTHENTIK_SECRET_KEY: FA8GANUqMJwFg0drDlurF+ZQK2A6ohSjc4MGksUqN+A36yIA
+      AUTHENTIK_SECRET_KEY: dev-only-authentik-secret-key
       AUTHENTIK_REDIS__HOST: authentikredis
       AUTHENTIK_POSTGRESQL__HOST: authentikdb
       AUTHENTIK_POSTGRESQL__USER: authentik
