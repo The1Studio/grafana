@@ -1650,7 +1650,7 @@ a5a8fed6-0bca-4646-9946-2fe84175353b	t	f	account	0	f	d0b8b6b6-2a02-412c-84d1-716
 805aebc8-9d01-42b6-bcce-6ce48ca63ef0	t	f	security-admin-console	0	t	27d2217e-9934-4971-93b8-77969e47ecf7	/admin/grafana/console/	f	\N	f	grafana	openid-connect	0	f	f	${client_security-admin-console}	f	client-secret	${authAdminUrl}	\N	\N	t	f	f	f
 6bd2d943-9800-4839-9ddc-03c04930cd9f	t	f	admin-cli	0	t	da0811c3-5031-4f35-9dc5-441050461a37	\N	f	\N	f	grafana	openid-connect	0	f	f	${client_admin-cli}	f	client-secret	\N	\N	\N	f	f	t	f
 169f1dea-80f0-4a99-8509-9abb70ab0a5c	t	t	sample-iframe-project	0	t	c2ada58a-760e-40d7-8ddc-9ea69b465af2	\N	f	http://localhost:4200	f	grafana	openid-connect	-1	f	f	\N	f	client-secret	http://localhost:4200	\N	\N	t	f	t	f
-09b79548-8426-4c0e-8e0b-7488467532c7	t	t	grafana-oauth	0	f	d17b9ea9-bcb1-43d2-b132-d339e55872a8	http://env.grafana.local:8087	f	http://env.grafana.local:8087	f	grafana	openid-connect	-1	f	f	\N	f	client-secret	http://env.grafana.local:8087	\N	\N	t	f	t	f
+09b79548-8426-4c0e-8e0b-7488467532c7	t	t	grafana-oauth	0	f	deadbeef-dead-beef-dead-beefdeadbeef	http://env.grafana.local:8087	f	http://env.grafana.local:8087	f	grafana	openid-connect	-1	f	f	\N	f	client-secret	http://env.grafana.local:8087	\N	\N	t	f	t	f
 \.
 
 
