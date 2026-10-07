@@ -55,6 +55,7 @@ jobs:
       - name: Upload build output as artifact
         uses: actions/upload-artifact@v5
         with:
+          retention-days: 14
           name: buildPr
           path: './pr/pr_built_packages.zip'
 
@@ -102,6 +103,7 @@ jobs:
       - name: Upload build output as artifact
         uses: actions/upload-artifact@v5
         with:
+          retention-days: 14
           name: buildBase
           path: './base/base_built_packages.zip'
 
@@ -177,6 +179,7 @@ jobs:
       - name: Upload check output as artifact
         uses: actions/upload-artifact@v5
         with:
+          retention-days: 14
           name: levitate
           path: levitate/
 
