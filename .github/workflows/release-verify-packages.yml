@@ -26,6 +26,7 @@ permissions:
 
 jobs:
   verify-deb:
+    if: github.repository == 'grafana/grafana'
     name: Verify deb
     runs-on: ubuntu-x64-large
     steps:
@@ -134,6 +135,7 @@ jobs:
           fi
 
   verify-rpm:
+    if: github.repository == 'grafana/grafana'
     name: Verify rpm
     runs-on: ubuntu-x64-large
     steps:
@@ -235,6 +237,7 @@ jobs:
           fi
 
   verify-docker:
+    if: github.repository == 'grafana/grafana'
     name: Verify docker
     runs-on: ubuntu-x64-large
     steps:
@@ -322,6 +325,7 @@ jobs:
         run: docker rm -f grafana-verify || true
 
   verify-docker-ubuntu:
+    if: github.repository == 'grafana/grafana'
     name: Verify docker-ubuntu
     runs-on: ubuntu-x64-large
     steps:

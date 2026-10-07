@@ -8,6 +8,7 @@ permissions: {}
 
 jobs:
   codeowners-validator:
+    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-x64-small
     permissions:
       contents: read

@@ -170,7 +170,7 @@ jobs:
 
   backfill-triage:
     needs: [list-unlabeled-issues]
-    if: needs.list-unlabeled-issues.outputs.issues != '[]'
+    if: github.repository == 'grafana/grafana' && (needs.list-unlabeled-issues.outputs.issues != '[]')
     runs-on: ubuntu-arm64-small
     permissions:
       contents: read

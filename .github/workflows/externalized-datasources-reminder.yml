@@ -11,7 +11,7 @@ on:
 
 jobs:
   add-comment:
-    if: ${{ ! github.event.pull_request.head.repo.fork }}
+    if: ${{ github.repository == 'grafana/grafana' && (! github.event.pull_request.head.repo.fork ) }}
     runs-on: ubuntu-x64-small
     permissions:
       pull-requests: write

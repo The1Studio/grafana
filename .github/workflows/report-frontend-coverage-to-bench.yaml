@@ -9,6 +9,7 @@ permissions: {}
 
 jobs:
   setup:
+    if: github.repository == 'grafana/grafana'
     name: Setup opted-in teams
     runs-on: ubuntu-x64-small
     outputs:
@@ -39,6 +40,7 @@ jobs:
         run: echo "Opted-in teams defined in job outputs"
 
   coverage-to-bench:
+    if: github.repository == 'grafana/grafana'
     name: Report coverage to Bench - ${{ matrix.codeowner }}
     needs: setup
     runs-on: ubuntu-x64-large

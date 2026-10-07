@@ -17,6 +17,7 @@ concurrency:
 
 jobs:
   check:
+    if: github.repository == 'grafana/grafana'
     name: K8s Codegen Check
     runs-on: ubuntu-arm64
     permissions:

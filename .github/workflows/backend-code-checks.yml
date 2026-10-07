@@ -46,7 +46,7 @@ jobs:
       contents: read
       id-token: write
     needs: detect-changes
-    if: needs.detect-changes.outputs.changed == 'true' || needs.detect-changes.outputs.dev-dashboards-changed == 'true'
+    if: github.repository == 'grafana/grafana' && (needs.detect-changes.outputs.changed == 'true' || needs.detect-changes.outputs.dev-dashboards-changed == 'true')
     name: Validate Backend Configs
     runs-on: ubuntu-x64
     steps:

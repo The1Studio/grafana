@@ -39,6 +39,7 @@ permissions: {}
 
 jobs:
   main:
+    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-arm64-small
     permissions:
       # Pushes use the app token via actions/checkout; GITHUB_TOKEN needs only OIDC for Vault.

@@ -20,6 +20,7 @@ permissions: {}
 
 jobs:
   setup:
+    if: github.repository == 'grafana/grafana'
     name: Setup opted-in teams
     runs-on: ubuntu-x64-small
     outputs:
@@ -38,6 +39,7 @@ jobs:
         run: echo "Opted-in teams defined in job outputs"
 
   detect-changes:
+    if: github.repository == 'grafana/grafana'
     name: Detect changed files
     runs-on: ubuntu-x64-small
     permissions:
@@ -91,7 +93,7 @@ jobs:
   coverage:
     name: Coverage - ${{ matrix.codeowner }}
     needs: [setup, detect-changes]
-    if: "!contains(github.event.pull_request.labels.*.name, 'no-check-frontend-test-coverage')"
+    if: "github.repository == 'grafana/grafana' && (!contains(github.event.pull_request.labels.*.name, 'no-check-frontend-test-coverage'))"
     runs-on: ubuntu-x64-large
     permissions:
       contents: read
@@ -219,7 +221,7 @@ jobs:
   coverage-summary:
     name: All coverage checks pass
     needs: [setup, coverage]
-    if: always()
+    if: github.repository == 'grafana/grafana' && (always())
     runs-on: ubuntu-x64-small
     permissions:
       contents: read

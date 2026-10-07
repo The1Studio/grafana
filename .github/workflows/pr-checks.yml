@@ -18,7 +18,7 @@ jobs:
       actions: write
       contents: read
       pull-requests: read
-    if: github.event.pull_request.draft == false
+    if: github.repository == 'grafana/grafana' && (github.event.pull_request.draft == false)
     steps:
       - name: Run PR Checks
         uses: grafana/grafana-github-actions/pr-checks@main

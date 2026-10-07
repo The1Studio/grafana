@@ -13,6 +13,7 @@ permissions: {}
 
 jobs:
   detect-changes:
+    if: github.repository == 'grafana/grafana'
     name: Detect whether code changed
     runs-on: ubuntu-arm64-small
     permissions:
@@ -33,7 +34,7 @@ jobs:
 
   check-workspace:
     needs: detect-changes
-    if: needs.detect-changes.outputs.changed == 'true'
+    if: github.repository == 'grafana/grafana' && (needs.detect-changes.outputs.changed == 'true')
     name: Go Workspace Check
     runs-on: ubuntu-arm64
 
@@ -97,7 +98,7 @@ jobs:
 
   check-wire:
     needs: detect-changes
-    if: needs.detect-changes.outputs.changed == 'true'
+    if: github.repository == 'grafana/grafana' && (needs.detect-changes.outputs.changed == 'true')
     name: Check Wire Changes
     runs-on: ubuntu-arm64
 

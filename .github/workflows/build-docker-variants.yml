@@ -52,6 +52,7 @@ on:
 
 jobs:
   build:
+    if: github.repository == 'grafana/grafana'
     name: ${{ matrix.variant }}
     runs-on: ubuntu-x64-large
     permissions:

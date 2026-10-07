@@ -34,7 +34,7 @@ jobs:
 
   test:
     needs: detect-changes
-    if: needs.detect-changes.outputs.changedbackend == 'true' || needs.detect-changes.outputs.changeddocs == 'true'
+    if: github.repository == 'grafana/grafana' && (needs.detect-changes.outputs.changedbackend == 'true' || needs.detect-changes.outputs.changeddocs == 'true')
 
     name: Feature toggles documentation is in sync with source
 

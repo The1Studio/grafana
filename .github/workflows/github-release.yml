@@ -35,6 +35,7 @@ permissions: {}
 
 jobs:
   main:
+    if: github.repository == 'grafana/grafana'
     permissions:
       # contents: write allows the action(s) to create github releases
       contents: write
@@ -50,7 +51,7 @@ jobs:
           dry_run: ${{ inputs.dry_run }}
   deploy-storybook:
     needs: main
-    if: ${{ !inputs.dry_run && inputs.latest == '1' }}
+    if: ${{ github.repository == 'grafana/grafana' && (!inputs.dry_run && inputs.latest == '1' ) }}
     permissions:
       contents: read
       id-token: write

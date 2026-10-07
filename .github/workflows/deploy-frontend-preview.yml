@@ -69,7 +69,7 @@ jobs:
     # The label records the opt-in so pushes to the PR redeploy the preview
     # without another comment.
     needs: check
-    if: github.event_name == 'issue_comment' && needs.check.outputs.should-deploy == 'true'
+    if: github.repository == 'grafana/grafana' && (github.event_name == 'issue_comment' && needs.check.outputs.should-deploy == 'true')
     runs-on: ubuntu-arm64-small
     permissions:
       issues: write
@@ -88,7 +88,7 @@ jobs:
   comment-building:
     name: Comment that the build started
     needs: check
-    if: needs.check.outputs.should-deploy == 'true'
+    if: github.repository == 'grafana/grafana' && (needs.check.outputs.should-deploy == 'true')
     runs-on: ubuntu-arm64-small
     permissions:
       pull-requests: write
@@ -107,7 +107,7 @@ jobs:
   build:
     name: Build frontend
     needs: check
-    if: needs.check.outputs.should-deploy == 'true'
+    if: github.repository == 'grafana/grafana' && (needs.check.outputs.should-deploy == 'true')
     runs-on: ubuntu-x64-large
     # Only runs that passed the check gate reach this job, so unrelated
     # comments never join the group. A newer push cancels a stale in-flight
@@ -141,6 +141,7 @@ jobs:
           retention-days: 1
 
   deploy:
+    if: github.repository == 'grafana/grafana'
     name: Deploy preview assets
     # Uploads from a separate job so the OIDC-enabled step never runs
     # alongside code built from the PR.
@@ -260,7 +261,7 @@ jobs:
   comment-failure:
     name: Comment that the deploy failed
     needs: [check, build, deploy]
-    if: failure() && needs.check.outputs.should-deploy == 'true'
+    if: github.repository == 'grafana/grafana' && (failure() && needs.check.outputs.should-deploy == 'true')
     runs-on: ubuntu-arm64-small
     permissions:
       pull-requests: write
@@ -282,9 +283,11 @@ jobs:
     # failure() does not match cancelled jobs, so without this a cancelled run
     # would leave the sticky comment saying the build is in progress forever.
     if: |
+      github.repository == 'grafana/grafana' && (
       always() && needs.check.outputs.should-deploy == 'true' &&
       !contains(needs.*.result, 'failure') &&
       contains(needs.*.result, 'cancelled')
+      )
     runs-on: ubuntu-arm64-small
     permissions:
       pull-requests: write

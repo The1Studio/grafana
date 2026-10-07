@@ -9,6 +9,7 @@ concurrency:
 
 jobs:
   update-grafana:
+    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-arm64
     permissions:
       contents: write

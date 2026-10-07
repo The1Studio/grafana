@@ -20,6 +20,7 @@ permissions: {}
 
 jobs:
   run-diagnostics-e2e:
+    if: github.repository == 'grafana/grafana'
     name: Download diagnostics e2e (on-prem)
     runs-on: ubuntu-x64-large
     timeout-minutes: 20

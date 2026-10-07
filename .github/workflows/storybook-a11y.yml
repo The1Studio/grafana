@@ -40,7 +40,7 @@ jobs:
       contents: read
       id-token: write
     needs: detect-changes
-    if: needs.detect-changes.outputs.changed == 'true'
+    if: github.repository == 'grafana/grafana' && (needs.detect-changes.outputs.changed == 'true')
     strategy:
       fail-fast: false
       matrix:

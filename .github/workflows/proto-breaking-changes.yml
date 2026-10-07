@@ -15,6 +15,7 @@ permissions: {}
 
 jobs:
   breaking:
+    if: github.repository == 'grafana/grafana'
     name: ${{ matrix.module }}
     runs-on: ubuntu-arm64-small
     permissions:
