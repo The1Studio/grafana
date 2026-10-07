@@ -15,7 +15,7 @@ permissions: {}
 jobs:
   detect-changes:
     # Run on `grafana/grafana` pushes, or on pull requests, to prevent double-running on mirrors
-    if: (github.event_name == 'pull_request' || (github.event_name == 'push' && github.repository == 'grafana/grafana'))
+    if: github.repository == 'grafana/grafana' && ((github.event_name == 'pull_request' || (github.event_name == 'push' && github.repository == 'grafana/grafana')))
     name: Detect whether code changed
     runs-on: ubuntu-arm64-small
     permissions:
@@ -44,7 +44,7 @@ jobs:
       id-token: write
     # Run this workflow only for PRs from forks; if it gets merged into `main` or `release-*`,
     # the `lint-frontend-prettier-enterprise` workflow will run instead
-    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == true && needs.detect-changes.outputs.prettier == 'true'
+    if: github.repository == 'grafana/grafana' && (github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == true && needs.detect-changes.outputs.prettier == 'true')
     name: Lint
     runs-on: ubuntu-x64
     steps:
@@ -63,7 +63,7 @@ jobs:
       contents: read
       id-token: write
     # Run this workflow for non-PR events (like pushes to `main` or `release-*`) OR for internal PRs (PRs not from forks)
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false && needs.detect-changes.outputs.prettier == 'true'
+    if: github.repository == 'grafana/grafana' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false && needs.detect-changes.outputs.prettier == 'true')
     name: Lint
     runs-on: ubuntu-x64
     steps:
@@ -92,7 +92,7 @@ jobs:
       id-token: write
     # Run this workflow only for PRs from forks; if it gets merged into `main` or `release-*`,
     # the `lint-frontend-typecheck-enterprise` workflow will run instead
-    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == true && needs.detect-changes.outputs.changed == 'true'
+    if: github.repository == 'grafana/grafana' && (github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == true && needs.detect-changes.outputs.changed == 'true')
     name: Typecheck
     runs-on: ubuntu-x64
     env:
@@ -113,7 +113,7 @@ jobs:
       contents: read
       id-token: write
     # Run this workflow for non-PR events (like pushes to `main` or `release-*`) OR for internal PRs (PRs not from forks)
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false && needs.detect-changes.outputs.changed == 'true'
+    if: github.repository == 'grafana/grafana' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false && needs.detect-changes.outputs.changed == 'true')
     name: Typecheck
     runs-on: ubuntu-x64
     env:
@@ -143,7 +143,7 @@ jobs:
       id-token: write
     # Run this workflow only for PRs from forks; if it gets merged into `main` or `release-*`,
     # the `lint-frontend-api-clients-enterprise` workflow will run instead
-    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == true
+    if: github.repository == 'grafana/grafana' && (github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == true)
     name: Verify API clients
     runs-on: ubuntu-x64
     steps:
@@ -171,7 +171,7 @@ jobs:
     needs: detect-changes
     # Run this workflow for OSS only, and only when frontend code or this workflow
     # file has changed (skips unrelated .github/** changes).
-    if: needs.detect-changes.outputs.changed == 'true'
+    if: github.repository == 'grafana/grafana' && (needs.detect-changes.outputs.changed == 'true')
     permissions:
       contents: read
       id-token: write
@@ -210,7 +210,7 @@ jobs:
       contents: read
       id-token: write
     # Run this workflow for pushes to `main` or `release-*` on `grafana/grafana` (not mirrors) OR for internal PRs (PRs not from forks)
-    if: (github.event_name == 'push' && github.repository == 'grafana/grafana') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false)
+    if: github.repository == 'grafana/grafana' && ((github.event_name == 'push' && github.repository == 'grafana/grafana') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false))
     name: Verify API clients (enterprise)
     runs-on: ubuntu-x64
     steps:
@@ -250,7 +250,7 @@ jobs:
     permissions:
       contents: read
       id-token: write
-    if: github.event_name != 'pull_request' || needs.detect-changes.outputs.changed-frontend-packages == 'true' || needs.detect-changes.outputs.changed-frontend-dependencies == 'true'
+    if: github.repository == 'grafana/grafana' && (github.event_name != 'pull_request' || needs.detect-changes.outputs.changed-frontend-packages == 'true' || needs.detect-changes.outputs.changed-frontend-dependencies == 'true')
     name: Verify packed frontend packages
     runs-on: ubuntu-x64
     steps:
@@ -273,7 +273,7 @@ jobs:
     permissions:
       contents: read
       id-token: write
-    if: github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'main' && needs.detect-changes.outputs.changed == 'true'
+    if: github.repository == 'grafana/grafana' && (github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'main' && needs.detect-changes.outputs.changed == 'true')
     name: Check circular dependencies
     runs-on: ubuntu-x64
     steps:
@@ -343,7 +343,7 @@ jobs:
     needs:
       - detect-changes
     # Run this workflow for non-PR events (like pushes to `main` or `release-*`) OR for internal PRs (PRs not from forks)
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false && needs.detect-changes.outputs.changed == 'true'
+    if: github.repository == 'grafana/grafana' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false && needs.detect-changes.outputs.changed == 'true')
     steps:
     - uses: actions/checkout@v5
       with:
@@ -367,7 +367,7 @@ jobs:
   yarn-install-validation:
     needs:
       - detect-changes
-    if: needs.detect-changes.outputs.changed-frontend-dependencies == 'true'
+    if: github.repository == 'grafana/grafana' && (needs.detect-changes.outputs.changed-frontend-dependencies == 'true')
     runs-on: ubuntu-x64
     name: Validate yarn install
     permissions:

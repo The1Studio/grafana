@@ -12,7 +12,7 @@ permissions: {}
 jobs:
   detect-changes:
     # Run on `grafana/grafana` main branch, or on pull requests to prevent double-running on mirrors
-    if: (github.event_name == 'pull_request' || (github.event_name == 'push' && github.repository == 'grafana/grafana'))
+    if: github.repository == 'grafana/grafana' && ((github.event_name == 'pull_request' || (github.event_name == 'push' && github.repository == 'grafana/grafana')))
     name: Detect whether code changed
     runs-on: ubuntu-arm64-small
     permissions:
@@ -34,7 +34,7 @@ jobs:
 
   test:
     needs: detect-changes
-    if: needs.detect-changes.outputs.changedbackend == 'true' || needs.detect-changes.outputs.changeddocs == 'true'
+    if: github.repository == 'grafana/grafana' && (needs.detect-changes.outputs.changedbackend == 'true' || needs.detect-changes.outputs.changeddocs == 'true')
 
     name: Feature toggles documentation is in sync with source
 

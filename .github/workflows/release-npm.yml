@@ -56,7 +56,7 @@ jobs:
     # https://docs.npmjs.com/trusted-publishers#supported-cicd-providers
     runs-on: github-hosted-ubuntu-x64-small
 
-    if: inputs.version_type == 'nightly' || inputs.version_type == 'stable'
+    if: github.repository == 'grafana/grafana' && (inputs.version_type == 'nightly' || inputs.version_type == 'stable')
     # Required for this workflow to have permission to publish NPM packages
     environment: npm-publish
     permissions:

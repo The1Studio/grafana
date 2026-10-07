@@ -90,6 +90,7 @@ jobs:
 
   # Triggers the same workflow in `grafana-enterprise` on the same ref
   downstream:
+    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-x64-small
     needs: [setup]
     permissions:
@@ -185,6 +186,7 @@ jobs:
             })
 
   build-frontend:
+    if: github.repository == 'grafana/grafana'
     name: build frontend
     runs-on: ubuntu-x64-large
     needs: [setup]
@@ -206,6 +208,7 @@ jobs:
           retention-days: 1
 
   build-backend:
+    if: github.repository == 'grafana/grafana'
     name: build backend / ${{ matrix.name }}
     runs-on: ubuntu-x64-large
     needs: [setup]
@@ -271,6 +274,7 @@ jobs:
           retention-days: 1
 
   build-targz:
+    if: github.repository == 'grafana/grafana'
     name: targz / ${{ matrix.name }}
     runs-on: ubuntu-x64-large
     continue-on-error: ${{ matrix.allow-failure == true }}
@@ -366,6 +370,7 @@ jobs:
           retention-days: 1
 
   build-deb-rpm:
+    if: github.repository == 'grafana/grafana'
     name: deb / rpm / ${{ matrix.name }}
     runs-on: ubuntu-x64-large
     continue-on-error: ${{ matrix.allow-failure == true }}
@@ -467,6 +472,7 @@ jobs:
           retention-days: 1
 
   verify-rpm-stig:
+    if: github.repository == 'grafana/grafana'
     name: verify rpm stig (linux-amd64)
     runs-on: ubuntu-x64-large
     needs:
@@ -489,6 +495,7 @@ jobs:
           bash scripts/verify-pkg-stig.sh "$PKG"
 
   build-docker-linux-amd64:
+    if: github.repository == 'grafana/grafana'
     name: docker / linux-amd64
     needs: [setup, build-targz]
     uses: ./.github/workflows/build-docker-variants.yml
@@ -506,6 +513,7 @@ jobs:
       tag-prefix: "grafana/grafana-image-tags:"
 
   build-docker-linux-arm64:
+    if: github.repository == 'grafana/grafana'
     name: docker / linux-arm64
     needs: [setup, build-targz]
     uses: ./.github/workflows/build-docker-variants.yml
@@ -523,6 +531,7 @@ jobs:
       tag-prefix: "grafana/grafana-image-tags:"
 
   build-docker-linux-s390x:
+    if: github.repository == 'grafana/grafana'
     name: docker / linux-s390x
     needs: [setup, build-targz]
     uses: ./.github/workflows/build-docker-variants.yml
@@ -540,6 +549,7 @@ jobs:
       tag-prefix: "grafana/grafana-image-tags:"
 
   build-docker-linux-armv7:
+    if: github.repository == 'grafana/grafana'
     name: docker / linux-armv7
     needs: [setup, build-targz]
     uses: ./.github/workflows/build-docker-variants.yml
@@ -559,6 +569,7 @@ jobs:
 
 
   verify-targz:
+    if: github.repository == 'grafana/grafana'
     name: verify targz (linux-amd64)
     needs:
       - build-targz
@@ -568,6 +579,7 @@ jobs:
       targz-artifact-name: artifacts-packages-linux-amd64
 
   verify-packages:
+    if: github.repository == 'grafana/grafana'
     name: verify packages (linux-amd64)
     needs:
       - build-deb-rpm
@@ -580,6 +592,7 @@ jobs:
       docker-ubuntu-artifact-name: artifacts-docker-ubuntu-linux-amd64
 
   build-windows:
+    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-x64-large
     needs:
       - setup
@@ -663,6 +676,7 @@ jobs:
           retention-days: 1
 
   publish-targz:
+    if: github.repository == 'grafana/grafana'
     name: Upload targz / ${{ matrix.target }}
     strategy:
       fail-fast: false
@@ -695,6 +709,7 @@ jobs:
       runs-on: ubuntu-x64-small
 
   publish-deb-rpm:
+    if: github.repository == 'grafana/grafana'
     name: Upload deb/rpm / ${{ matrix.target }}
     strategy:
       fail-fast: false
@@ -723,6 +738,7 @@ jobs:
       runs-on: ubuntu-x64-small
 
   publish-docker-alpine:
+    if: github.repository == 'grafana/grafana'
     name: Upload docker (alpine) / ${{ matrix.target }}
     strategy:
       fail-fast: false
@@ -750,6 +766,7 @@ jobs:
       runs-on: ubuntu-x64-small
 
   publish-docker-alpine-slim:
+    if: github.repository == 'grafana/grafana'
     name: Upload docker (alpine-slim) / ${{ matrix.target }}
     strategy:
       fail-fast: false
@@ -777,6 +794,7 @@ jobs:
       runs-on: ubuntu-x64-small
 
   publish-docker-ubuntu:
+    if: github.repository == 'grafana/grafana'
     name: Upload docker (ubuntu) / ${{ matrix.target }}
     strategy:
       fail-fast: false
@@ -804,6 +822,7 @@ jobs:
       runs-on: ubuntu-x64-small
 
   publish-docker-ubuntu-slim:
+    if: github.repository == 'grafana/grafana'
     name: Upload docker (ubuntu-slim) / ${{ matrix.target }}
     strategy:
       fail-fast: false
@@ -831,6 +850,7 @@ jobs:
       runs-on: ubuntu-x64-small
 
   publish-docker-distroless:
+    if: github.repository == 'grafana/grafana'
     name: Upload docker (distroless) / ${{ matrix.target }}
     strategy:
       fail-fast: false
@@ -858,6 +878,7 @@ jobs:
       runs-on: ubuntu-x64-small
 
   publish-docker-distroless-slim:
+    if: github.repository == 'grafana/grafana'
     name: Upload docker (distroless-slim) / ${{ matrix.target }}
     strategy:
       fail-fast: false
@@ -885,6 +906,7 @@ jobs:
       runs-on: ubuntu-x64-small
 
   publish-windows:
+    if: github.repository == 'grafana/grafana'
     name: Upload windows / ${{ matrix.target }}
     strategy:
       fail-fast: false

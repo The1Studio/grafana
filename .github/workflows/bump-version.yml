@@ -16,6 +16,7 @@ permissions: {}
 
 jobs:
   bump-version:
+    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-arm64-small
     permissions:
       id-token: write

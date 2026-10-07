@@ -18,6 +18,7 @@ permissions: {}
 
 jobs:
   setup:
+    if: github.repository == 'grafana/grafana'
     name: Compute versions
     runs-on: ubuntu-arm64-small
     permissions:
@@ -46,6 +47,7 @@ jobs:
           } | tee -a "$GITHUB_OUTPUT"
 
   create_release_branch_grafana:
+    if: github.repository == 'grafana/grafana'
     name: Create release branch (Grafana)
     needs: setup
     runs-on: ubuntu-arm64-small
@@ -100,6 +102,7 @@ jobs:
           GITHUB_TOKEN: ${{ steps.get-writer-app-token.outputs.token }}
 
   bump_main:
+    if: github.repository == 'grafana/grafana'
     name: Bump main to next minor
     # Only advance main once the release branches have actually been cut. If either
     # branch-cut job fails (ref already exists, token misconfigured, ghcommit-action
@@ -169,6 +172,7 @@ jobs:
             --body "Bumps main to ${NEXT_VERSION} after cutting ${RELEASE_BRANCH}."
 
   create_release_branch_enterprise:
+    if: github.repository == 'grafana/grafana'
     name: Create release branch (Grafana Enterprise)
     needs: setup
     runs-on: ubuntu-arm64-small

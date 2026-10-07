@@ -16,7 +16,7 @@ concurrency:
 jobs:
   request:
     name: Request go.mod reviewers
-    if: github.event.pull_request.head.repo.full_name == github.repository
+    if: github.repository == 'grafana/grafana' && (github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-arm64-small
     permissions:
       contents: read

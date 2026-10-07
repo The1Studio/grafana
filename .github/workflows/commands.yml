@@ -13,6 +13,7 @@ permissions: {}
 
 jobs:
   config:
+    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-arm64-small
     outputs:
       has-secrets: ${{ steps.check.outputs.has-secrets }}
@@ -27,7 +28,7 @@ jobs:
 
   main:
     needs: config
-    if: needs.config.outputs.has-secrets
+    if: github.repository == 'grafana/grafana' && (needs.config.outputs.has-secrets)
     runs-on: ubuntu-arm64-small
     permissions:
       contents: read

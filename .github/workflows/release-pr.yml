@@ -46,6 +46,7 @@ permissions:
 
 jobs:
   capture-date:
+    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-arm64-small
     permissions:
       contents: read
@@ -73,6 +74,7 @@ jobs:
         run: echo "release_date=$release_date" >> "$GITHUB_OUTPUT"
 
   push-changelog-to-main:
+    if: github.repository == 'grafana/grafana'
     needs: capture-date
     permissions:
       contents: write

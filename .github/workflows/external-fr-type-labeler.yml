@@ -10,8 +10,10 @@ jobs:
   label:
     name: Add feature-request label
     if: >-
+      github.repository == 'grafana/grafana' && (
       github.event.action == 'typed' ||
       (github.event.action == 'opened' && github.event.issue.type != null)
+      )
     runs-on: ubuntu-latest
     permissions:
       issues: write

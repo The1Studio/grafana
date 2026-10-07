@@ -29,10 +29,12 @@ jobs:
       issues: write   # post welcome comment and auto-triaged label
       id-token: write # vault OIDC + broker token exchange
     if: |
+      github.repository == 'grafana/grafana' && (
       !contains(github.event.issue.labels.*.name, 'fr/auto-triaged') &&
       (
         (github.event.action == 'labeled' && contains(github.event.issue.labels.*.name, 'type/feature-request'))
         || github.event.action == 'typed'
+      )
       )
 
     steps:

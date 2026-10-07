@@ -26,7 +26,7 @@ permissions:
 
 jobs:
   setup:
-    if: ${{ github.event_name == 'workflow_dispatch' || (github.event.pull_request.merged == true && startsWith(github.head_ref, 'release/')) }}
+    if: ${{ github.repository == 'grafana/grafana' && (github.event_name == 'workflow_dispatch' || (github.event.pull_request.merged == true && startsWith(github.head_ref, 'release/')) ) }}
     name: Setup and establish latest
     outputs:
       version: ${{ steps.output.outputs.version }}
@@ -64,7 +64,7 @@ jobs:
     needs: setup
     # Security releases don't open a new patch development branch: the next branch is the
     # incremented +security-NN created below, not a version bump.
-    if: ${{ !contains(needs.setup.outputs.version, '+security') }}
+    if: ${{ github.repository == 'grafana/grafana' && (!contains(needs.setup.outputs.version, '+security') ) }}
     permissions:
       contents: read
       id-token: write
@@ -75,7 +75,7 @@ jobs:
   create_next_release_branch_enterprise:
     name: Create next release branch (Grafana Enterprise)
     needs: setup
-    if: ${{ !contains(needs.setup.outputs.version, '+security') }}
+    if: ${{ github.repository == 'grafana/grafana' && (!contains(needs.setup.outputs.version, '+security') ) }}
     permissions:
       contents: read
       id-token: write
@@ -86,6 +86,7 @@ jobs:
   # No security-mirror job: grafana-security-mirror branches are created automatically
   # from the release branch (the part before the +), so the branch always exists.
   create_security_branch_enterprise:
+    if: github.repository == 'grafana/grafana'
     name: Create security branch (Enterprise)
     needs: setup
     permissions:
@@ -101,7 +102,7 @@ jobs:
       - setup
       - create_next_release_branch_grafana
     # No next branch is created for security releases, so there is nothing to migrate to.
-    if: ${{ !contains(needs.setup.outputs.version, '+security') }}
+    if: ${{ github.repository == 'grafana/grafana' && (!contains(needs.setup.outputs.version, '+security') ) }}
     permissions:
       contents: read
       id-token: write
@@ -114,7 +115,7 @@ jobs:
     needs:
       - setup
       - create_next_release_branch_enterprise
-    if: ${{ !contains(needs.setup.outputs.version, '+security') }}
+    if: ${{ github.repository == 'grafana/grafana' && (!contains(needs.setup.outputs.version, '+security') ) }}
     permissions:
       contents: read
       id-token: write
@@ -136,7 +137,7 @@ jobs:
     # commit from.
     name: Create release tag
     needs: setup
-    if: ${{ github.event_name == 'pull_request' && needs.setup.outputs.dry_run != 'true' }}
+    if: ${{ github.repository == 'grafana/grafana' && (github.event_name == 'pull_request' && needs.setup.outputs.dry_run != 'true' ) }}
     permissions:
       contents: read
       id-token: write
@@ -152,7 +153,7 @@ jobs:
       - setup
       - create_release_tag
     # Run unless setup was skipped or something actually failed/cancelled — a skipped create_release_tag is fine.
-    if: ${{ !failure() && !cancelled() && needs.setup.result == 'success' }}
+    if: ${{ github.repository == 'grafana/grafana' && (!failure() && !cancelled() && needs.setup.result == 'success' ) }}
     permissions:
       contents: write
       id-token: write
@@ -170,7 +171,7 @@ jobs:
     needs:
       - setup
       - create_github_release
-    if: ${{ needs.setup.outputs.dry_run != 'true' }}
+    if: ${{ github.repository == 'grafana/grafana' && (needs.setup.outputs.dry_run != 'true' ) }}
     permissions:
       contents: write
       id-token: write
@@ -189,7 +190,7 @@ jobs:
     needs:
       - setup
       - create_github_release
-    if: ${{ needs.setup.outputs.dry_run != 'true' && !contains(needs.setup.outputs.version, '+security') }}
+    if: ${{ github.repository == 'grafana/grafana' && (needs.setup.outputs.dry_run != 'true' && !contains(needs.setup.outputs.version, '+security') ) }}
     runs-on: ubuntu-arm64-small
     permissions:
       contents: write
@@ -252,6 +253,7 @@ jobs:
           gh release upload "$tag" "${files[@]}" --clobber --repo "$GH_REPO"
 
   post_on_slack:
+    if: github.repository == 'grafana/grafana'
     needs: setup
     runs-on: ubuntu-arm64-small
     env:

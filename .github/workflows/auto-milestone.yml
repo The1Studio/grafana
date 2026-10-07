@@ -18,7 +18,7 @@ jobs:
       # contents: read is needed to read package.json from the PR's base branch.
       contents: read
       pull-requests: write
-    if: github.event.pull_request.draft == false
+    if: github.repository == 'grafana/grafana' && (github.event.pull_request.draft == false)
     steps:
       # Note: Github will not trigger other actions from this because it uses
       # the GITHUB_TOKEN token

@@ -21,7 +21,7 @@ permissions: {}
 jobs:
   detect-changes:
     # Gate the whole workflow behind this check. Skip draft PRs entirely.
-    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false && github.event.pull_request.draft == false
+    if: github.repository == 'grafana/grafana' && (github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false && github.event.pull_request.draft == false)
     name: Detect whether code changed
     runs-on: ubuntu-x64-small
     permissions:
@@ -47,7 +47,7 @@ jobs:
   setup:
     name: setup
     needs: [detect-changes]
-    if: needs.detect-changes.outputs.changed == 'true'
+    if: github.repository == 'grafana/grafana' && (needs.detect-changes.outputs.changed == 'true')
     runs-on: ubuntu-x64-small
     permissions:
       contents: read
@@ -65,6 +65,7 @@ jobs:
         run: echo "version=$(cat VERSION)" >> "$GITHUB_OUTPUT"
 
   build-frontend:
+    if: github.repository == 'grafana/grafana'
     name: build frontend
     runs-on: ubuntu-x64-large
     needs: [setup]
@@ -86,6 +87,7 @@ jobs:
           retention-days: 1
 
   build-backend:
+    if: github.repository == 'grafana/grafana'
     name: build backend
     runs-on: ubuntu-x64-large
     needs: [setup]
@@ -106,6 +108,7 @@ jobs:
           retention-days: 1
 
   build-targz:
+    if: github.repository == 'grafana/grafana'
     name: build targz
     runs-on: ubuntu-x64-large
     needs:
@@ -131,6 +134,7 @@ jobs:
           retention-days: 1
 
   build-docker:
+    if: github.repository == 'grafana/grafana'
     name: build docker
     runs-on: ubuntu-x64-large
     needs:
@@ -178,7 +182,7 @@ jobs:
     needs:
       - detect-changes
       - build-docker
-    if: needs.detect-changes.outputs.changed == 'true'
+    if: github.repository == 'grafana/grafana' && (needs.detect-changes.outputs.changed == 'true')
     name: Push PR Docker image
     outputs:
       IMAGE: ${{ steps.push-image.outputs.IMAGE }}

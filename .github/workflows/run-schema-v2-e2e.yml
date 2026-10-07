@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-x64-large
     continue-on-error: true
     # Run on `grafana/grafana` pushes (not mirrors), or on non-draft pull requests
-    if: (github.event_name == 'push' && github.repository == 'grafana/grafana') || (github.event_name == 'pull_request' && github.event.pull_request.draft == false)
+    if: github.repository == 'grafana/grafana' && ((github.event_name == 'push' && github.repository == 'grafana/grafana') || (github.event_name == 'pull_request' && github.event.pull_request.draft == false))
     permissions:
       contents: read
     steps:

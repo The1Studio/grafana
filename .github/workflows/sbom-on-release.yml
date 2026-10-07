@@ -31,6 +31,7 @@ permissions: {}
 
 jobs:
   export-sbom:
+    if: github.repository == 'grafana/grafana'
     name: "Export SBOM and attach to release"
     runs-on: ubuntu-latest
     permissions:

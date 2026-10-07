@@ -19,7 +19,7 @@ env:
 
 jobs:
   detect-changes:
-    if: github.event.pull_request.draft == false
+    if: github.repository == 'grafana/grafana' && (github.event.pull_request.draft == false)
     name: Detect frontend changes
     runs-on: ubuntu-x64-small
     permissions:
@@ -54,7 +54,7 @@ jobs:
           echo "sha=$base_sha" >> "$GITHUB_OUTPUT"
 
   build:
-    if: needs.detect-changes.outputs.frontend-src == 'true'
+    if: github.repository == 'grafana/grafana' && (needs.detect-changes.outputs.frontend-src == 'true')
     name: Build ${{ matrix.target }} frontend
     needs: detect-changes
     runs-on: ubuntu-x64-large
@@ -96,6 +96,7 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
   bundle-size:
+    if: github.repository == 'grafana/grafana'
     name: Check bundle size impact
     needs: build
     runs-on: ubuntu-x64-small

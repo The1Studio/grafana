@@ -15,6 +15,7 @@ permissions: {}
 
 jobs:
   trufflehog:
+    if: github.repository == 'grafana/grafana'
     name: Run Trufflehog
     runs-on: ubuntu-arm64-small
     permissions:

@@ -27,6 +27,7 @@ permissions: {}
 
 jobs:
   main:
+    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-arm64-small
     permissions:
       contents: read

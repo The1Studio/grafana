@@ -8,6 +8,7 @@ permissions: {}
 
 jobs:
   label:
+    if: github.repository == 'grafana/grafana'
     name: Add community/champion label if author is a known champion
     runs-on: ubuntu-latest
     permissions:
